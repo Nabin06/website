@@ -1,31 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   
-    <title>Nabin's Site</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782773934951039"
-     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Personal Website</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a; /* Dark background */
+            color: #e0e0e0; /* Light text for contrast */
+            line-height: 1.6;
+        }
+
+        a {
+            color: #8B4513; /* Brown for links */
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header */
+        header {
+            background-color: #8B4513; /* Brown header */
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.2rem;
+        }
+
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #2a2a2a; /* Slightly lighter dark background */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        /* Profile Image */
+        .profile-img {
+            max-width: 150px;
+            border-radius: 50%;
+            display: block;
+            margin: 20px auto;
+            border: 4px solid #8B4513; /* Brown border */
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 40px;
+        }
+
+        section h2 {
+            color: #8B4513; /* Brown for headings */
+            font-size: 2rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #8B4513; /* Brown underline */
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* About Section */
+        #about p {
+            text-align: center;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Contact Information */
+        .contact-info {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .contact-info li {
+            background-color: #3a3a3a; /* Darker background for contact items */
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-info li:hover {
+            background-color: #4a4a4a; /* Slightly lighter on hover */
+        }
+
+        /* Skills Section */
+        #skills ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        #skills li {
+            background-color: #8B4513; /* Brown for skills */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        /* Experience and Education Sections */
+        #experience p,
+        #education p {
+            background-color: #3a3a3a; /* Darker background for experience/education */
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header p {
+                font-size: 1rem;
+            }
+
+            .profile-img {
+                max-width: 120px;
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-info li {
+                width: 100%;
+                text-align: center;
+            }
+
+            #skills ul {
+                flex-direction: column;
+            }
+
+            #skills li {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
-<style>
-    body{
-        background-color:black;
-        color: white;
-    }
-    h1{
-        background-color: green;
-    }
-</style>
 <body>
-    <center><h1 class="center">Introduction</h1></center>
-    <p>I am Nabin Gautam and you are on my website.Here you will find everything about me.</p>
-    <center><h2>My Social Media's :)</h2></center>
-    <ul>
-        <li>My <a href="facebook.html" target="_blank">facebook</a> page</li>
-        <li>my <a href="https://www.instagram.com/nabingautam00/ " target="_blank">instagram</a> page</li>
-        <li>My <a href="https://www.youtube.com/channel/UCyBB3CSCp-5auMwwKVxPDjQ" target="_blank">youtube</a> channel</li>
-        <li>My <a href="https://discord.gg/JfJU3nyDM2" target="_blank">discord</a> page</li>
-    </ul>  
-    <a href="privacy.html"target="_blank">Privacy Policy</a>
-    <h1><a href="project.html" target="_blank">GAME</a></h1>
+
+    <header>
+        <h1>Nabin Gautam</h1>
+        <p>Student at Pulchowk Engineering College</p>
+    </header>
+
+    <div class="container">
+        <!-- About Section -->
+        <section id="about">
+            <h2>About Me</h2>
+            <img src="photo (1).jpg" alt="Nabin" class="profile-img">
+            <p>
+                Hello! My name is Nabin Gautam. 
+                I specialize in Web Development(mostly backend). In my free time, I enjoy gaming.
+            </p>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2>Contact Information</h2>
+            <ul class="contact-info">
+                <li>Email: <a href="mailto:youremail@example.com">nabingautam061@gmail.com</a></li>
+                <li>Phone: 9863589769</li>
+                <li>LinkedIn: <a href="https://www.linkedin.com/in/nabin-gautam-27701327b/" target="_blank">Profile</a></li>
+                <li>GitHub: <a href="https://github.com/Nabin06" target="_blank">Profile</a></li>
+                
+            </ul>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <h2>Skills</h2>
+            <ul>
+                <li>Backend Development</li>
+                <li>Fluent in English and Nepali</li>
+            </ul>
+        </section>
+
+        <!-- Experience Section -->
+
+        <!-- Education Section -->
+        <section id="education">
+            <h2>Education</h2>
+            <p>
+                Engineering in computer science from Pulchowk Collage, Tribhuvan University
+            </p>
+            <!-- Add more education entries as needed -->
+        </section>
+    </div>
+
 </body>
 </html>
