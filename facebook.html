@@ -25,53 +25,37 @@
   </div>
   <script>
     document.getElementById("contactForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      
-      // Get IP address for logging (optional)
-      let ip = "Unknown";
-      try {
-        const ipResponse = await fetch('https://api.ipify.org?format=json');
-        const ipData = await ipResponse.json();
-        ip = ipData.ip;
-      } catch (ipError) {
-        console.warn("Could not get IP:", ipError);
-      }
+  e.preventDefault();
+  
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData.entries());
 
-      const formData = new FormData(e.target);
-      const data = Object.fromEntries(formData.entries());
-      
-      try {
-        console.log("Submitting:", data); // Debug log
-        
-        const response = await fetch("https://script.google.com/macros/s/AKfycbzoHoy0zGHQOnOyxOy6uGsGbU3Wk7oCDbz78qAZvyqYjBtWHkqN88Bw7JIfoYH57lc9/exec", {
-          method: "POST",
-          headers: { 
-            "Content-Type": "application/json",
-            "X-Custom-Header": "FormSubmit" 
-          },
-          body: JSON.stringify({
-            username: data.username,
-            login_time: new Date().toISOString(),
-            ip_address: ip,
-            password_masked: "******" // Never send real passwords!
-          })
-        });
-        
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
-        const result = await response.json();
-        console.log("Server response:", result);
-        
-        if (result.status === "success") {
-          alert("Login attempt recorded successfully!");
-        } else {
-          throw new Error(result.message || "Unknown server error");
-        }
-      } catch (error) {
-        console.error("Submission error:", error);
-        alert(`Error: ${error.message}`);
-      }
+  try {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbxA9_lX9RjLLQZm1M03jJDyYsvY9eGCLv--QSzmnU_G6UMglVDdd79I7x20ANYBbAzo/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: data.username,
+        // Never send real passwords in production
+        password: "masked_for_security" 
+      })
     });
+
+    if (!response.ok) throw new Error("Network response was not OK");
+    
+    const result = await response.json();
+    console.log("Server response:", result);
+    
+    if (result.success) {
+      alert("Data saved successfully!");
+    } else {
+      throw new Error(result.error || "Unknown server error");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Submission failed: " + error.message);
+  }
+});
   </script>
 </body>
 </html>
