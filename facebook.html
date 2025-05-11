@@ -36,8 +36,7 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: data.username,
-        // password: data.password, // Remove in production!
-        timestamp: new Date().toISOString()
+        password: data.password, 
       })
     });
     
