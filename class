@@ -1,0 +1,400 @@
+#include <iostream>
+using namespace std;
+
+class Distance {
+private:
+    int meters;
+    int centimeters;
+
+public:
+    // Default constructor
+    Distance() {
+        meters = 0;
+        centimeters = 0;
+    }
+
+    // Constructor with meters and centimeters
+    Distance(int m, int cm) {
+        meters = m;
+        centimeters = cm;
+    }
+
+    // Set distance
+    void setDistance(int m, int cm) {
+        meters = m;
+        centimeters = cm;
+    }
+
+    // Convert to float meters
+    float toFloatMeters() {
+        return meters + (centimeters / 100.0f);
+    }
+
+    // Convert from float meters to m & cm
+    void fromFloatMeters(float totalMeters) {
+        meters = (int)totalMeters;
+        centimeters = (int)((totalMeters - meters) * 100);
+    }
+
+    // Display
+    void display() {
+        cout << "Meters: " << meters << ", Centimeters: " << centimeters << endl;
+    }
+};
+
+int main() {
+    Distance d1;
+    int m, cm;
+    float totalMeters;
+
+    // Input meters and centimeters
+    cout << "Enter meters and centimeters: ";
+    cin >> m >> cm;
+    d1.setDistance(m, cm);
+
+    // Convert to float meters
+    totalMeters = d1.toFloatMeters();
+    cout << "Total distance in meters (float): " << totalMeters << " m" << endl;
+
+    // Convert float meters back to meters & centimeters
+    Distance d2;
+    d2.fromFloatMeters(totalMeters);
+    cout << "Converted back to meters and centimeters:\n";
+    d2.display();
+
+    return 0;
+}
+
+
+
+
+
+
+#include <iostream>
+using namespace std;
+
+class DistanceImperial; // Forward declaration
+
+class DistanceMetric {
+private:
+    int meters;
+    int centimeters;
+
+public:
+    DistanceMetric() : meters(0), centimeters(0) {}
+    DistanceMetric(int m, int cm) : meters(m), centimeters(cm) {}
+
+    void input() {
+        cout << "Enter distance in meters and centimeters: ";
+        cin >> meters >> centimeters;
+    }
+
+    void display() const {
+        cout << "Metric: " << meters << " m " << centimeters << " cm" << endl;
+    }
+
+    // Convert to imperial
+    DistanceImperial toImperial() const;
+};
+
+class DistanceImperial {
+private:
+    int feet;
+    int inches;
+
+public:
+    DistanceImperial() : feet(0), inches(0) {}
+    DistanceImperial(int f, int in) : feet(f), inches(in) {}
+
+    void input() {
+        cout << "Enter distance in feet and inches: ";
+        cin >> feet >> inches;
+    }
+
+    void display() const {
+        cout << "Imperial: " << feet << " ft " << inches << " in" << endl;
+    }
+
+    // Convert to metric
+    DistanceMetric toMetric() const;
+};
+
+// Conversion factor constants
+const float METER_TO_FEET = 3.28084f;
+const float INCH_TO_CM = 2.54f;
+
+// Metric → Imperial
+DistanceImperial DistanceMetric::toImperial() const {
+    float totalMeters = meters + centimeters / 100.0f;
+    float totalFeet = totalMeters * METER_TO_FEET;
+
+    int feetPart = (int)totalFeet;
+    int inchesPart = (int)((totalFeet - feetPart) * 12);
+
+    return DistanceImperial(feetPart, inchesPart);
+}
+
+// Imperial → Metric
+DistanceMetric DistanceImperial::toMetric() const {
+    float totalInches = feet * 12 + inches;
+    float totalCentimeters = totalInches * INCH_TO_CM;
+
+    int metersPart = (int)(totalCentimeters / 100);
+    int centimetersPart = (int)(totalCentimeters) % 100;
+
+    return DistanceMetric(metersPart, centimetersPart);
+}
+
+int main() {
+    DistanceMetric dm;
+    DistanceImperial di;
+
+    // Metric to Imperial
+    dm.input();
+    di = dm.toImperial();
+    dm.display();
+    di.display();
+
+    cout << endl;
+
+    // Imperial to Metric
+    di.input();
+    dm = di.toMetric();
+    di.display();
+    dm.display();
+
+    return 0;
+}
+
+
+
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Base class
+class Musicians {
+protected:
+    string stringInstruments[5];
+    string windInstruments[5];
+    string percInstruments[5];
+
+public:
+    void string() {
+        stringInstruments[0] = "Veena";
+        stringInstruments[1] = "Guitar";
+        stringInstruments[2] = "Sitar";
+        stringInstruments[3] = "Sarod";
+        stringInstruments[4] = "Mandolin";
+
+        cout << "\nString Instruments:\n";
+        for (int i = 0; i < 5; i++)
+            cout << "- " << stringInstruments[i] << endl;
+    }
+
+    void wind() {
+        windInstruments[0] = "Flute";
+        windInstruments[1] = "Clarinet";
+        windInstruments[2] = "Saxophone";
+        windInstruments[3] = "Nadhaswaram";
+        windInstruments[4] = "Piccolo";
+
+        cout << "\nWind Instruments:\n";
+        for (int i = 0; i < 5; i++)
+            cout << "- " << windInstruments[i] << endl;
+    }
+
+    void perc() {
+        percInstruments[0] = "Tabla";
+        percInstruments[1] = "Mridangam";
+        percInstruments[2] = "Bangos";
+        percInstruments[3] = "Drums";
+        percInstruments[4] = "Tambour";
+
+        cout << "\nPercussion Instruments:\n";
+        for (int i = 0; i < 5; i++)
+            cout << "- " << percInstruments[i] << endl;
+    }
+};
+
+// Derived class
+class TypeIns : public Musicians {
+private:
+    char choice;
+
+public:
+    void get() {
+        cout << "\nType of instruments to be displayed:\n";
+        cout << "a. String instruments\n";
+        cout << "b. Wind instruments\n";
+        cout << "c. Percussion instruments\n";
+        cout << "Enter your choice (a/b/c): ";
+        cin >> choice;
+    }
+
+    void show() {
+        switch (choice) {
+            case 'a':
+            case 'A':
+                string();
+                break;
+            case 'b':
+            case 'B':
+                wind();
+                break;
+            case 'c':
+            case 'C':
+                perc();
+                break;
+            default:
+                cout << "Invalid choice!" << endl;
+        }
+    }
+};
+
+// Main function
+int main() {
+    TypeIns instrument;
+    instrument.get();
+    instrument.show();
+    return 0;
+}
+
+
+
+
+
+#include <iostream>
+using namespace std;
+
+class Person {
+protected:
+    string name;
+    int age;
+public:
+    void setData() {
+        cout << "Enter name and age: ";
+        cin >> name >> age;
+    }
+    void printAddress() {
+        cout << "Address of Person: " << this << endl;
+    }
+};
+
+class Student : public Person {
+    int roll;
+public:
+    void setStudent() {
+        setData();
+        cout << "Enter roll: ";
+        cin >> roll;
+    }
+    void printAddress() {
+        cout << "Address of Student: " << this << endl;
+    }
+};
+
+class Employee : public Person {
+    int empId;
+public:
+    void setEmployee() {
+        setData();
+        cout << "Enter employee ID: ";
+        cin >> empId;
+    }
+    void printAddress() {
+        cout << "Address of Employee: " << this << endl;
+    }
+};
+
+int main() {
+    Person p1, p2;
+    Student s1, s2;
+    Employee e1, e2;
+
+    p1.setData(); p1.printAddress();
+    p2.setData(); p2.printAddress();
+
+    s1.setStudent(); s1.printAddress();
+    s2.setStudent(); s2.printAddress();
+
+    e1.setEmployee(); e1.printAddress();
+    e2.setEmployee(); e2.printAddress();
+
+    cout << "\nSize of Person: " << sizeof(p1) << " bytes\n";
+    cout << "Size of Student: " << sizeof(s1) << " bytes\n";
+    cout << "Size of Employee: " << sizeof(e1) << " bytes\n";
+
+    return 0;
+}
+
+
+
+
+
+#include <iostream>
+using namespace std;
+
+// Base class
+class BaseComplex {
+protected:
+    float real, imag;
+
+public:
+    void input() {
+        cout << "Enter base complex number (real imag): ";
+        cin >> real >> imag;
+    }
+};
+
+// Derived class
+class DerivedComplex : public BaseComplex {
+    float dReal, dImag;
+
+public:
+    void inputDerived() {
+        cout << "Enter derived complex number (real imag): ";
+        cin >> dReal >> dImag;
+    }
+
+    void add() {
+        float r = real + dReal;
+        float i = imag + dImag;
+        cout << "Sum: " << r << " + " << i << "i" << endl;
+    }
+
+    friend class FriendComplex;
+};
+
+// Friend class
+class FriendComplex {
+    float fReal, fImag;
+
+public:
+    void inputFriend() {
+        cout << "Enter friend complex number (real imag): ";
+        cin >> fReal >> fImag;
+    }
+
+    void subtract(BaseComplex b) {
+        float r = b.real - fReal;
+        float i = b.imag - fImag;
+        cout << "Difference (base - friend): " << r << " + " << i << "i" << endl;
+    }
+};
+
+int main() {
+    DerivedComplex d;
+    d.input();
+    d.inputDerived();
+    d.add();
+
+    FriendComplex f;
+    f.inputFriend();
+    f.subtract(d); // Accessing base complex from derived via friendship
+
+    return 0;
+}
+
